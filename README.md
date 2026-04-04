@@ -1,41 +1,285 @@
-# Seedance 2.0 Prompt Guide
+# Seedance 2.0 提示词指南
 
-A skill for crafting high-quality prompts for **Seedance 2.0** (即梦), ByteDance's multimodal AI video generation model.
+[English](README_EN.md)
 
-## Installation
+为**即梦 Seedance 2.0**撰写高质量提示词的 skill。
+
+## 安装
 
 ```bash
 npx skills add JHBOY-ha/seedance-2-prompt-guide
 ```
 
-## What it does
+## 功能介绍
 
-When invoked, this skill turns the agent into a Seedance 2.0 prompt engineer. It guides the full prompt creation workflow:
+激活后，此 skill 将 agent 转变为 Seedance 2.0 提示词工程师，指导完整的提示词创作流程：
 
-- **Analyzes camera choreography** — before finalizing any prompt, maps out each shot's movement trajectory, subject positions, and timing to catch conflicts early
-- **Writes structured prompts** — supports both natural-language 6-step format (simple scenes) and timestamped storyboard format (8s+ or complex scenes)
-- **Handles multimodal references** — generates correct `@` syntax for image, video, and audio inputs with explicit role assignments (first frame, character reference, camera reference, etc.)
-- **Covers 16 scene types** — characters, product showcases, action sequences, sci-fi effects, music sync edits, dialogue, space exploration, and more
-- **Executes via CLI** — when asked to generate, calls the `dreamina` CLI with the correct flags for `image2video` or `multimodal2video`
+- **分析镜头运动** — 在确定提示词之前，梳理每个镜头的运动轨迹、主体位置和时间节点，提前发现冲突
+- **撰写结构化提示词** — 支持自然语言六步格式（简单场景）和带时间戳的分镜格式（8 秒以上或复杂场景）
+- **处理多模态引用** — 生成正确的 `@` 语法，用于图像、视频和音频输入，并明确指定角色（首帧、角色参考、镜头参考等）
+- **覆盖 16 种场景类型** — 人物、产品展示、动作序列、科幻特效、音乐剪辑、对话、太空探索等
+- **通过 CLI 执行** — 需要生成时，使用正确参数调用 `dreamina` CLI，支持 `image2video` 和 `multimodal2video`
 
-## When it triggers
+## 触发条件
 
-- Creating or optimizing Seedance / Jimeng (即梦) video prompts
-- Working with ByteDance video model prompts
-- Using the `dreamina` CLI for video generation
+- 创建或优化 Seedance / 即梦视频提示词
+- 使用字节跳动视频模型提示词
+- 通过 `dreamina` CLI 进行视频生成
 
-## Output format
+---
 
-Prompts are output as compact, blank-line-free text ready to paste directly into the Jimeng web interface or pass to the CLI.
+## 提示词格式
 
-## Skill structure
+### 方式一：自然语言六步法（简单场景首选）
+
+```
+[主体描述], [动作行为], 在[环境场景], 镜头[运镜方式], 风格[画面风格], 避免[负向约束]
+```
+
+最佳长度：**60–100 词**
+
+| 步骤 | 要素 | 示例 |
+|------|------|------|
+| 主体 | 具体外貌细节，避免泛称 | "30 岁左右的女性，深蓝色西装，深色头发松散盘起" |
+| 动作 | 具体动词 + 量化强度 | "缓慢转身，微微低头，嘴角上扬" |
+| 环境 | 光线 + 氛围 + 时间 | "黄昏时分，金色余晖，微风中的城市街道" |
+| 镜头 | **只用一个主镜头指令** | "慢速推进镜头" |
+| 风格 | 具体视觉美学参考 | "35mm 胶片颗粒感，柯达色调，电影级宽画幅" |
+| 约束 | 明确排除不想要的效果 | "避免抖动，避免肢体变形，避免画面闪烁" |
+
+### 方式二：结构化分镜格式（8 秒以上 / 复杂场景推荐）
+
+```
+【风格】视觉风格, 时长, 画幅比例, 整体氛围
+
+【时间轴】
+0-Xs：镜头类型 + 画面内容 + 动作 + 特效
+Xs-Ys：镜头类型 + 画面内容 + 动作
+...
+
+【声音】配乐风格 + 音效 + 对白/旁白
+
+【参考】@素材名  用途说明
+```
+
+标准 15 秒节奏：
+- **0–3s** 开场 / 场景建立
+- **3–6s** 发展 / 冲突引入
+- **6–10s** 高潮 / 情感顶点
+- **10–13s** 转折点
+- **13–15s** 收尾 / 定格画面
+
+---
+
+## @ 引用语法
+
+### 引用方式
+
+```
+@图片1    @图片2    @视频1    @音频1
+```
+
+### 为每个引用指定用途（必须明确）
+
+| 用途 | 示例写法 |
+|------|---------|
+| 首帧 | `@图片1 作为首帧` |
+| 尾帧 | `@图片2 作为尾帧` |
+| 人物形象 | `参考 @图片1 的人物形象` |
+| 场景 / 背景 | `场景参考 @图片3` |
+| 运镜 | `参考 @视频1 的运镜效果` |
+| 动作编排 | `参考 @视频1 的动作编排` |
+| 特效 / 转场 | `完全参考 @视频1 的特效和转场` |
+| 节奏 / 节拍 | `视频节奏参考 @视频1` |
+| 旁白音色 | `旁白音色参考 @视频1` |
+| 背景音乐 | `背景 BGM 参考 @音频1` |
+| 服装 | `穿着 @图片2 的服装` |
+| 产品外观 | `产品细节参考 @图片3` |
+
+分配建议：图片 3–5 张、视频 1–2 段、音频 1 段为主
+
+---
+
+## 运镜语言参考
+
+### 基础运镜
+
+| 术语 | 说明 |
+|------|------|
+| 推镜头 / 慢推 | 镜头向主体靠近，情绪聚焦 |
+| 拉镜头 / 后拉 | 镜头远离主体，空间揭示 |
+| 左摇 / 右摇 | 镜头水平旋转，场景扫描 |
+| 上摇 / 下摇 | 镜头垂直旋转 |
+| 跟随镜头 / 跟拍 | 镜头跟随主体移动 |
+| 环绕镜头 | 镜头围绕主体旋转，产品展示常用 |
+| 固定镜头 | 完全静止，突出动作主体 |
+| 手持抖动 | 模拟自然抖动，纪录片感 |
+| 升镜 / 降镜 | 镜头垂直升降，视角切换 |
+| 一镜到底 | 全程无剪辑的连续镜头 |
+
+### 高级运镜
+
+| 术语 | 说明 |
+|------|------|
+| 希区柯克变焦 | 推拉 + 变焦的眩晕效果 |
+| 鱼眼镜头 | 超广角畸变镜头 |
+| 低角度仰拍 | 低机位向上拍摄，增加英雄感 |
+| 俯拍 / 鸟瞰 | 从高处向下拍摄 |
+| 第一人称主观视角 | 从角色视角出发 |
+| 快速摇镜 | 极速水平旋转产生运动模糊 |
+| 机械臂跟随 | 多角度灵活跟随人物视线 |
+
+### 景别
+
+| 术语 | 说明 |
+|------|------|
+| 极致特写 | 仅拍摄眼睛、嘴巴等细节 |
+| 面部特写 | 人脸充满画面 |
+| 中近景 | 头部和肩部 |
+| 中景 | 腰部以上 |
+| 全景 | 展示完整人物 |
+| 远景 / 建立镜头 | 展示完整环境 |
+
+**关键规则：只使用一个主要镜头指令，次要运动用修饰词叠加：**
+- ❌ "推进 + 拉远 + 环绕"（冲突指令）
+- ✅ "慢速推进镜头，轻微上移"
+
+---
+
+## 16 种场景类型
+
+| # | 场景类型 | 核心技法 |
+|---|---------|---------|
+| 1 | 人物一致性 | 用 `@图片1` 锚定参考图保持角色统一 |
+| 2 | 运镜精准复刻 | `完全参考 @视频1 的所有运镜效果` |
+| 3 | 创意特效复刻 | 替换人物，保留参考视频的特效和运镜 |
+| 4 | 视频延长（前 / 后） | `将 @视频1 延长 Xs`，生成时长选新增部分时长 |
+| 5 | 视频编辑 | 保留原视频大部分，定向修改特定元素 |
+| 6 | 音乐卡点 | 多图 + `@视频` 节奏参考，精确对拍 |
+| 7 | 对话与声音演绎 | 完整对白脚本 + 情绪注释 |
+| 8 | 一镜到底 | `全程不要切镜头，一镜到底` |
+| 9 | 电商 / 产品展示 | 360 度旋转、爆炸分解、材质特写 |
+| 10 | 科普 / 教育 | 带时间码的动画过程演示 |
+| 11 | AI 短剧 / 漫改 | 按分镜顺序演绎漫画，加入特殊音效 |
+| 12 | 视频融合 / 续写 | 粒子转场连接多段视频 |
+| 13 | 空间漫游 | 沉浸式环境穿越，按建筑序列推进 |
+| 14 | 角色对战 | 双人动作编排 + 冲击波特效 |
+| 15 | 战争 / 高速追踪 | 手持纪录片风格或极速运动镜头 |
+| 16 | 伪纪录片 / 情节反转 | 日常铺垫 + 意外剧情反转 |
+
+---
+
+## 风格关键词
+
+### 光线（杠杆效应最高的单项要素）
+
+| 类型 | 关键词 |
+|------|--------|
+| 自然光 | 黄金时段光、柔和散射光、蓝调黄昏、逆光、晨雾 |
+| 人工光 | 霓虹反光、轮廓光、伦勃朗光、工作室打光、侧光 |
+| 特殊光效 | 体积光、丁达尔效应、剪影、逆光轮廓 |
+| 色温 | 暖色调 / 冷色调 |
+
+### 色调 / 调色
+
+| 风格 | 关键词 |
+|------|--------|
+| 电影感 | `35mm 胶片颗粒感，柯达色调`、`变形镜头光晕`、`2.35:1 宽银幕` |
+| 高饱和 | `高饱和霓虹色调，冷暖对比`、`赛博朋克色调` |
+| 低饱和 | `脱饱和，灰冷色调`、`黑白水墨风格` |
+| 质感 | `胶片质感`、`广告级精细质感`、`MV 处理`、`油画风格` |
+
+---
+
+## 常见失败及修复
+
+| 问题 | 原因 | 解决方案 |
+|------|------|---------|
+| 画面太静 | 未描述运动细节 | 加入具体动作动词和运镜指令 |
+| 光线平淡 | 缺少光源描述 | 加入光线类型 + 质感关键词 |
+| 人物变形 | 描述过于复杂 | 简化场景，聚焦单一主体 |
+| 画面抖动闪烁 | 缺少负向约束 | 加入"避免抖动、避免闪烁、避免时序跳变" |
+| 运镜混乱 | 多重运镜冲突 | 只保留一个主要镜头指令 |
+| 延长质量衰减 | 连续延长超 3 次 | 重新导出作为新起点 |
+| 素材无归属 | @ 引用未说明用途 | 每个 @ 引用都必须标注功能 |
+| 内容过载 | 4–5 秒塞入太多场景 | 按时长合理规划节奏 |
+
+### 高危关键词（避免使用）
+
+| 词语 | 问题 | 替代方案 |
+|------|------|---------|
+| `fast`（裸词） | 触发混乱运动 | "快速奔跑" / 指定具体速度 |
+| `cinematic`（单独） | 太模糊 | "35mm 胶片感，宽幅构图" |
+| `epic`、`amazing` | 填充词，无效 | 用具体视觉描述替代 |
+| 写实真人脸部素材 | 审核自动拦截 | 使用 AI 生成人像或动漫风格 |
+
+---
+
+## 系统约束
+
+| 输入类型 | 数量上限 | 支持格式 | 大小限制 |
+|---------|---------|---------|---------|
+| 图片 | ≤ 9 张 | jpeg、png、webp、bmp、tiff、gif | 每张 < 30 MB |
+| 视频 | ≤ 3 个 | mp4、mov | 每个 < 50 MB，总时长 2–15s |
+| 音频 | ≤ 3 个 | mp3、wav | 每个 < 15 MB，总时长 ≤ 15s |
+| **总文件数** | **≤ 12 个** | — | — |
+
+输出：**4–15 秒**，最高 720p，自带音效 / 配乐。
+
+> 写实真人脸部素材（图片和视频均不可）会被平台内容过滤器自动拦截，请使用 AI 生成人像或动漫风格替代。
+
+---
+
+## CLI 执行
+
+> **仅在用户明确要求"执行 / 生成 / 运行"时才调用 CLI。若用户只是要提示词，直接输出提示词文本即可。**
+
+```bash
+# 图生视频（单图）
+dreamina image2video \
+  --image ./character.jpg \
+  --prompt "人物缓慢转身微笑，微风吹动头发，慢速推进镜头，金色黄昏光，电影级调色，避免抖动，避免变形" \
+  --model_version seedance2.0 \
+  --duration 8 \
+  --poll 60
+
+# 多模态（角色图 + 场景图 + 配乐）
+dreamina multimodal2video \
+  --image ./character.jpg \
+  --image ./scene.jpg \
+  --audio ./bgm.mp3 \
+  --prompt "人物缓慢走向远处，镜头平稳跟随，场景色调与背景图一致，避免抖动" \
+  --model_version seedance2.0 \
+  --duration 10 \
+  --ratio 16:9 \
+  --poll 60
+```
+
+### 关键参数速查
+
+| 参数 | 可选值 |
+|------|--------|
+| `--duration` | 4–15（秒） |
+| `--ratio` | `16:9` / `9:16` / `1:1` / `4:3` / `3:4` / `21:9` |
+| `--model_version` | `seedance2.0`（质量优先）/ `seedance2.0fast`（速度优先） |
+| `--poll` | 轮询超时秒数，建议 60 |
+
+**运行前**：用 `dreamina user_credit` 确认积分余量。首次使用若返回 `AigcComplianceConfirmationRequired`，需先在即梦网页端完成授权。
+
+---
+
+## 输出格式
+
+提示词以紧凑、无空行的文本输出，可直接粘贴到即梦网页界面或传入 CLI。
+
+## 技能结构
 
 ```
 seedance-2-prompt-guide/
-└── SKILL.md    # Full prompt guide: formulas, camera vocabulary,
-                # scene templates, @ reference syntax, CLI usage
+└── SKILL.md    # 完整提示词指南：公式、镜头词汇、
+                # 场景模板、@ 引用语法、CLI 用法
 ```
 
-## Related
+## 相关技能
 
-- **dreamina** skill — handles Dreamina CLI account setup, credits, and async task management
+- **dreamina** 技能 — 处理 Dreamina CLI 账号配置、积分和异步任务管理
