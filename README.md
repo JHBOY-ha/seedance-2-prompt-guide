@@ -2,9 +2,15 @@
 
 A skill for crafting high-quality prompts for **Seedance 2.0** (即梦), ByteDance's multimodal AI video generation model.
 
+## Installation
+
+```bash
+npx skills add JHBOY-ha/seedance-2-prompt-guide
+```
+
 ## What it does
 
-When invoked, this skill turns Claude into a Seedance 2.0 prompt engineer. It guides the full prompt creation workflow:
+When invoked, this skill turns the agent into a Seedance 2.0 prompt engineer. It guides the full prompt creation workflow:
 
 - **Analyzes camera choreography** — before finalizing any prompt, maps out each shot's movement trajectory, subject positions, and timing to catch conflicts early
 - **Writes structured prompts** — supports both natural-language 6-step format (simple scenes) and timestamped storyboard format (8s+ or complex scenes)
