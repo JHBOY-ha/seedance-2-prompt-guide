@@ -12,10 +12,12 @@ npx skills add JHBOY-ha/seedance-2-prompt-guide
 
 When invoked, this skill turns the agent into a Seedance 2.0 prompt engineer. It guides the full prompt creation workflow:
 
+- **Session persistence** — once loaded, the skill stays active for the entire conversation without needing to be re-invoked
+- **Proactive clarification** — when camera direction, subject positioning, or asset roles are ambiguous, the agent asks focused questions before writing the prompt rather than guessing
 - **Analyzes camera choreography** — before finalizing any prompt, maps out each shot's movement trajectory, subject positions, and timing to catch conflicts early
 - **Writes structured prompts** — supports both natural-language 6-step format (simple scenes) and timestamped storyboard format (8s+ or complex scenes)
 - **Handles multimodal references** — generates correct `@` syntax for image, video, and audio inputs with explicit role assignments (first frame, character reference, camera reference, etc.)
-- **Covers 16 scene types** — characters, product showcases, action sequences, sci-fi effects, music sync edits, dialogue, space exploration, and more
+- **Covers 15 scene types** — characters, product showcases, action sequences, sci-fi effects, music sync edits, dialogue, space exploration, and more
 - **Executes via CLI** — when asked to generate, calls the `dreamina` CLI with the correct flags for `image2video` or `multimodal2video`
 
 ## When it triggers
@@ -23,6 +25,8 @@ When invoked, this skill turns the agent into a Seedance 2.0 prompt engineer. It
 - Creating or optimizing Seedance / Jimeng (即梦) video prompts
 - Working with ByteDance video model prompts
 - Using the `dreamina` CLI for video generation
+
+**Not applicable for:** Sora, Runway, Kling, or other video models; static image generation; audio-only tasks.
 
 ---
 
@@ -145,7 +149,7 @@ Recommended allocation: **3–5 images, 1–2 videos, 1 audio**
 
 ---
 
-## 16 Scene Types
+## 15 Scene Types
 
 | # | Scene type | Core technique |
 |---|-----------|----------------|
@@ -162,9 +166,8 @@ Recommended allocation: **3–5 images, 1–2 videos, 1 audio**
 | 11 | AI short drama / manga adaptation | Panel-by-panel comic adaptation with SFX |
 | 12 | Video fusion / continuation | Particle transition between multiple video clips |
 | 13 | Space exploration | Immersive environment walkthrough in architectural sequence |
-| 14 | Character battle | Dual-character action choreography with impact effects |
-| 15 | War / high-speed chase | Handheld documentary style or extreme tracking |
-| 16 | Mock documentary / plot twist | Everyday setup + abrupt narrative reversal |
+| 14 | Action / battle / war | Cinematic fight choreography or handheld documentary-style combat tracking |
+| 15 | Mock documentary / plot twist | Everyday setup + abrupt narrative reversal |
 
 ---
 
