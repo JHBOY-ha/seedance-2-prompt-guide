@@ -1,7 +1,8 @@
 ---
 name: seedance-2-prompt-guide
-description: Use when creating, optimizing, or iterating prompts for Seedance 2.0 / Jimeng (即梦) AI video generation, or executing dreamina CLI video tasks. Triggers on: Seedance video prompts, ByteDance Jimeng video AI, @-reference multimodal syntax, image-to-video, text-to-video, dreamina CLI.
+description: Use when creating, optimizing, or iterating prompts for Seedance 2.0 / Jimeng (即梦) AI video generation, or executing dreamina CLI video generation tasks. Triggers on tasks involving Seedance video generation, ByteDance Jimeng video AI, multimodal @-reference syntax, image-to-video, text-to-video or dreamina CLI.
 ---
+
 # Seedance 2.0 视频提示词撰写指南
 
 ## 会话持久化声明
